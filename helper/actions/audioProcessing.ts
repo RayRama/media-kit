@@ -2,7 +2,8 @@ import * as lame from "@breezystack/lamejs"; // audio processing library
 
 export function audioProcessing(file: File | null) {
   // processing audio
-  const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+  const audioContext: AudioContext = new (window.AudioContext ||
+    window.webkitAudioContext)();
   const reader = new FileReader();
   reader.readAsArrayBuffer(file);
 
