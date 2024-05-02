@@ -22,7 +22,7 @@ const Button = styled.button`
 `;
 
 interface ButtonDownloadProps {
-  outputFile: File | null;
+  outputFile: Object | null;
 }
 
 const ButtonDownload = (props: ButtonDownloadProps) => {
@@ -32,7 +32,7 @@ const ButtonDownload = (props: ButtonDownloadProps) => {
       return;
     }
 
-    const url = URL.createObjectURL(props.outputFile.file);
+    const url = URL.createObjectURL(props.outputFile?.file);
     const a = document.createElement("a");
     a.href = url;
     a.download = `compressed - ${props.outputFile.name}`;

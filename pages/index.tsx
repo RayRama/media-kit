@@ -34,7 +34,7 @@ const Index: NextPage = () => {
   const [isProcessing, setIsProcessing] = useState<boolean>(false);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [fileName, setFileName] = useState<string>("");
-  const [outputFile, setOutputFile] = useState<File | null>(null);
+  const [outputFile, setOutputFile] = useState<Object | null>(null);
 
   const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
@@ -86,11 +86,7 @@ const Index: NextPage = () => {
         <MainContent>
           <DropZoneComponent
             selectedFile={selectedFile}
-            setSelectedFile={setSelectedFile}
             fileName={fileName}
-            setFileName={setFileName}
-            outputFile={outputFile}
-            setOutputFile={setOutputFile}
             handleFileUpload={handleFileUpload}
           />
 

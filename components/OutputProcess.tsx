@@ -19,7 +19,7 @@ const ImageResult = styled(Image)`
 `;
 
 interface OutputProcessProps {
-  outputFile: File | null;
+  outputFile: Object | null;
   selectedFileSize: number;
 }
 

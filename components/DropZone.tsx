@@ -63,21 +63,13 @@ const DropZoneContent = styled.div`
 
 interface DropZoneComponentProps {
   selectedFile: File | null;
-  setSelectedFile: (file: File | null) => void;
   fileName: string;
-  setFileName: (fileName: string) => void;
-  outputFile: File | null;
-  setOutputFile: (file: File | null) => void;
   handleFileUpload: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 const DropZoneComponent: React.FC<DropZoneComponentProps> = ({
   selectedFile,
-  setSelectedFile,
   fileName,
-  setFileName,
-  outputFile,
-  setOutputFile,
   handleFileUpload,
 }) => {
   return (
