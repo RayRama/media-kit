@@ -88,8 +88,8 @@ const DropZoneComponent: React.FC<DropZoneComponentProps> = ({
           event.preventDefault();
           handleFileUpload({
             target: {
-              files: event.dataTransfer.files,
-            },
+              files: event.dataTransfer.files as FileList,
+            } as React.ChangeEvent<HTMLInputElement>,
           });
         }}
       >
