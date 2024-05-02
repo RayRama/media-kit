@@ -10,6 +10,7 @@ import { CheckFileHelper } from "@/helper/checkFileHelper";
 import { ProcessingFileHelper } from "@/helper/processingFileHelper";
 import OutputProcess from "@/components/OutputProcess";
 import ButtonDownload from "@/components/ButtonDownload";
+import { OutputFileType } from "@/type/outputfileType";
 
 const MainContainer = styled.div`
   display: flex;
@@ -34,7 +35,10 @@ const Index: NextPage = () => {
   const [isProcessing, setIsProcessing] = useState<boolean>(false);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [fileName, setFileName] = useState<string>("");
-  const [outputFile, setOutputFile] = useState<Object | null>(null);
+  const [outputFile, setOutputFile] = useState<OutputFileType | null>(null);
+  const [maxHeight, setMaxHeight] = useState<number>(0);
+  const [maxWidth, setMaxWidth] = useState<number>(0);
+  const [isCompression, setIsCompression] = useState<boolean>(false);
 
   const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
@@ -55,23 +59,37 @@ const Index: NextPage = () => {
 
   const handleButtonProcess = async () => {
     setIsProcessing(true);
-    await ProcessingFileHelper(selectedFile)
-      .then((res) => {
-        setIsProcessing(false);
 
-        if (!res) {
-          alert("No file to process. Please upload a file first.");
-          return;
-        }
+    // console.log("selectedFile", selectedFile);
 
-        setOutputFile(res);
+    if (selectedFile?.type.includes("image")) {
+      await ProcessingFileHelper({
+        file: selectedFile,
+        maxWidth: maxWidth,
+        maxHeight: maxHeight,
+        isCompression: isCompression,
       })
-      .catch((err) => {
-        setIsProcessing(false);
-
-        alert("Error processing file: " + err);
-        return null;
-      });
+        .then((details) => {
+          setOutputFile(details);
+          setIsProcessing(false);
+        })
+        .catch((error) => {
+          console.error("ProcessingFileHelper error", error);
+          setIsProcessing(false);
+        });
+    } else if (selectedFile?.type.includes("audio")) {
+      await ProcessingFileHelper({
+        file: selectedFile,
+      })
+        .then((details) => {
+          setOutputFile(details);
+          setIsProcessing(false);
+        })
+        .catch((error) => {
+          console.error("ProcessingFileHelper error", error);
+          setIsProcessing(false);
+        });
+    }
   };
 
   return (
@@ -89,6 +107,30 @@ const Index: NextPage = () => {
             fileName={fileName}
             handleFileUpload={handleFileUpload}
           />
+
+          <label>
+            Max Width:
+            <input
+              type="number"
+              initialValue={maxWidth}
+              onChange={(e) => setMaxWidth(Number(e.target.value))}
+            />
+            Max Height:
+            <input
+              type="number"
+              initialValue={maxHeight}
+              onChange={(e) => setMaxHeight(Number(e.target.value))}
+            />
+          </label>
+
+          <label>
+            <input
+              type="checkbox"
+              checked={isCompression}
+              onChange={(e) => setIsCompression(e.target.checked)}
+            />
+            Compression
+          </label>
 
           <ButtonProcess
             onClick={() => handleButtonProcess()}

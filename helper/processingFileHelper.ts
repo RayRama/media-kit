@@ -1,23 +1,34 @@
 import { imageProcessing } from "./actions/imageProcessing";
 import { audioProcessing } from "./actions/audioProcessing";
+import { OutputFileType } from "@/type/outputfileType";
 
-interface fileDetails {
-  file: File;
-  name: string;
-  size: number;
-  type: string;
+interface ProcessingFileProps {
+  file: File | null;
+  maxWidth?: number;
+  maxHeight?: number;
+  isCompression?: boolean;
 }
 
-export async function ProcessingFileHelper(file) {
+export async function ProcessingFileHelper({
+  file,
+  maxWidth,
+  maxHeight,
+  isCompression,
+}: ProcessingFileProps) {
   let processedFile = null;
-  let details: fileDetails = null;
+  let details: OutputFileType = null;
 
   if (!file) {
     return;
   }
 
   if (file.type.includes("image")) {
-    processedFile = await imageProcessing(file);
+    processedFile = await imageProcessing({
+      file,
+      maxWidth,
+      maxHeight,
+      isCompression,
+    });
   } else if (file.type.includes("audio")) {
     processedFile = await audioProcessing(file);
   }

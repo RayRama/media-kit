@@ -28,7 +28,6 @@ const OutputProcess: React.FC<OutputProcessProps> = ({
   outputFile,
   selectedFileSize,
 }) => {
-  console.log("outputFile", outputFile);
   return (
     <OutputProcessContainer>
       {outputFile && (
