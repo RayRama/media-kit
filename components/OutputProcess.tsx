@@ -1,6 +1,7 @@
 import styled from "@emotion/styled";
 import Image from "next/image";
 import { FormatFileSize } from "@/helper/formatFileSizeHelper";
+import { OutputFileType } from "@/type/outputfileType";
 
 const OutputProcessContainer = styled.div`
   display: flex;
@@ -19,7 +20,7 @@ const ImageResult = styled(Image)`
 `;
 
 interface OutputProcessProps {
-  outputFile: Object | null;
+  outputFile: OutputFileType | null;
   selectedFileSize: number;
 }
 
@@ -27,6 +28,7 @@ const OutputProcess: React.FC<OutputProcessProps> = ({
   outputFile,
   selectedFileSize,
 }) => {
+  console.log("outputFile", outputFile);
   return (
     <OutputProcessContainer>
       {outputFile && (

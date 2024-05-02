@@ -1,3 +1,4 @@
+import { OutputFileType } from "@/type/outputfileType";
 import styled from "@emotion/styled";
 
 const Button = styled.button`
@@ -22,7 +23,7 @@ const Button = styled.button`
 `;
 
 interface ButtonDownloadProps {
-  outputFile: Object | null;
+  outputFile: OutputFileType | null;
 }
 
 const ButtonDownload = (props: ButtonDownloadProps) => {
