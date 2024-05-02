@@ -75,23 +75,23 @@ const DropZoneComponent: React.FC<DropZoneComponentProps> = ({
   return (
     <>
       <DropZoneLabel
-        onDragOver={(event: React.DragEvent<HTMLLabelElement>) => {
-          event.preventDefault();
-        }}
-        onDragLeave={(event: React.DragEvent<HTMLLabelElement>) => {
-          event.preventDefault();
-        }}
-        onDragEnter={(event: React.DragEvent<HTMLLabelElement>) => {
-          event.preventDefault();
-        }}
-        onDrop={(event: React.DragEvent<HTMLLabelElement>) => {
-          event.preventDefault();
-          handleFileUpload({
-            target: {
-              files: event.dataTransfer.files as FileList,
-            } as React.ChangeEvent<HTMLInputElement>,
-          });
-        }}
+      // onDragOver={(event: React.DragEvent<HTMLLabelElement>) => {
+      //   event.preventDefault();
+      // }}
+      // onDragLeave={(event: React.DragEvent<HTMLLabelElement>) => {
+      //   event.preventDefault();
+      // }}
+      // onDragEnter={(event: React.DragEvent<HTMLLabelElement>) => {
+      //   event.preventDefault();
+      // }}
+      // onDrop={(event: React.DragEvent<HTMLLabelElement>) => {
+      //   event.preventDefault();
+      //   handleFileUpload({
+      //     target: {
+      //       files: event.dataTransfer.files as FileList,
+      //     } as React.ChangeEvent<HTMLInputElement>,
+      //   });
+      // }}
       >
         <DropZoneInput
           type="file"
