@@ -1,14 +1,14 @@
-## MEDIA-KIT
+## TINY-MEDIA
 
 <div style="display: flex; flex-direction: row; gap: .5rem">
 
 [![Demo on Youtube](https://img.shields.io/badge/Demo%20on-Youtube-red)](https://www.youtube.com/watch?v=Q1jZ6n5Y1ZQ)
 
-[![Demo on Web](https://img.shields.io/badge/Demo%20on-Web-blue)](https://media-kit.vercel.app/)
+[![Demo on Web](https://img.shields.io/badge/Demo%20on-Web-blue)](https://tiny-media.vercel.app/)
 
 </div>
 
-Media-Kit adalah web-app yang berfungsi untuk mengkompres gambar dan audio tanpa mengurangi kualitasnya. Kamu bisa menggunakannya secara gratis tanpa perlu registrasi.
+Tiny-Media adalah web-app yang berfungsi untuk mengkompres gambar dan audio tanpa mengurangi kualitasnya. Kamu bisa menggunakannya secara gratis tanpa perlu login dan upload ke server kami, semua proses dilakukan di browser kamu. 100% privasi terjamin.
 
 ## Tech Stack
 
