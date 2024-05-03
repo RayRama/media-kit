@@ -16,3 +16,13 @@ Tiny-Media adalah web-app yang berfungsi untuk mengkompres gambar dan audio tanp
 - [Emotion](https://emotion.sh/docs/introduction)
 - [@breezystack/lamejs](https://www.npmjs.com/package/@breezystack/lamejs) on npmjs
 - [browser-image-compression](https://www.npmjs.com/package/browser-image-compression) on npmjs
+
+## Screenshot
+
+<div style="display: flex; flex-direction: row; gap: .5rem">
+
+![Compress Image](docs/docs-image.png)
+
+![Compress Audio](docs/docs-audio.png)
+
+</div>
