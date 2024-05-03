@@ -1,16 +1,30 @@
 import * as lame from "@breezystack/lamejs"; // audio processing library
 
-export function audioProcessing(file: File | null) {
+declare global {
+  interface Window {
+    AudioContext: any;
+    webkitAudioContext: any;
+  }
+}
+
+export function audioProcessing(file: File) {
   // processing audio
-  const audioContext: AudioContext = new (window.AudioContext ||
-    window.webkitAudioContext)();
+  const audioContext = new (window.AudioContext || window.webkitAudioContext)();
   const reader = new FileReader();
   reader.readAsArrayBuffer(file);
 
   return new Promise((resolve, reject) => {
     reader.onload = async (event) => {
-      const arrayBuffer = event.target.result;
+      const arrayBuffer = event.target?.result;
       const audioBuffer = await audioContext.decodeAudioData(arrayBuffer);
+
+      if (audioBuffer.numberOfChannels !== 2) {
+        reject("Only stereo audio is supported or audio already compressed.");
+
+        return alert(
+          "Only stereo audio is supported or audio already compressed."
+        );
+      }
 
       const mp3encoder = new lame.Mp3Encoder(1, audioBuffer.sampleRate, 32);
       const [left, right] = [
@@ -20,8 +34,8 @@ export function audioProcessing(file: File | null) {
       const sampleBlockSize = 1152;
       const mp3Data = [];
 
-      const l = new Float32Array(left.length);
-      const r = new Float32Array(right.length);
+      const l = new Int16Array(left.length);
+      const r = new Int16Array(right.length);
 
       for (let i = 0; i < left.length; i++) {
         l[i] = left[i] * 32767.0;
@@ -29,8 +43,8 @@ export function audioProcessing(file: File | null) {
       }
 
       for (let i = 0; i < l.length; i += sampleBlockSize) {
-        const leftChunk = l.subarray(i, i + sampleBlockSize);
-        const rightChunk = r.subarray(i, i + sampleBlockSize);
+        const leftChunk: Int16Array = l.subarray(i, i + sampleBlockSize);
+        const rightChunk: Int16Array = r.subarray(i, i + sampleBlockSize);
         const mp3buf = mp3encoder.encodeBuffer(leftChunk, rightChunk);
         if (mp3buf.length > 0) {
           mp3Data.push(mp3buf);

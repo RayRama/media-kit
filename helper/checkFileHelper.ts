@@ -1,4 +1,4 @@
-export function CheckFileHelper(file: File | null) {
+export function CheckFileHelper(file: File) {
   const MAX_FILE_SIZE = 5 * 1000000; // 5MB
 
   if (!file) {

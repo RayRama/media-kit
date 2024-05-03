@@ -1,10 +1,4 @@
-import { CheckFileHelper } from "@/helper/checkFileHelper";
-import { ProcessingFileHelper } from "@/helper/processingFileHelper";
 import styled from "@emotion/styled";
-import { useState } from "react";
-import ButtonProcess from "./ButtonProcess";
-import Image from "next/image";
-import { FormatFileSize } from "@/helper/formatFileSizeHelper";
 
 const DropZoneLabel = styled.label`
   display: flex;
@@ -72,26 +66,39 @@ const DropZoneComponent: React.FC<DropZoneComponentProps> = ({
   fileName,
   handleFileUpload,
 }) => {
+  const handleDrop = (event: React.DragEvent<HTMLLabelElement>) => {
+    event.preventDefault();
+    const file = event.dataTransfer.files as FileList;
+
+    const syntheticEvent = {
+      target: {
+        files: file,
+      },
+    } as React.ChangeEvent<HTMLInputElement>;
+
+    handleFileUpload(syntheticEvent);
+  };
   return (
     <>
       <DropZoneLabel
-      // onDragOver={(event: React.DragEvent<HTMLLabelElement>) => {
-      //   event.preventDefault();
-      // }}
-      // onDragLeave={(event: React.DragEvent<HTMLLabelElement>) => {
-      //   event.preventDefault();
-      // }}
-      // onDragEnter={(event: React.DragEvent<HTMLLabelElement>) => {
-      //   event.preventDefault();
-      // }}
-      // onDrop={(event: React.DragEvent<HTMLLabelElement>) => {
-      //   event.preventDefault();
-      //   handleFileUpload({
-      //     target: {
-      //       files: event.dataTransfer.files as FileList,
-      //     } as React.ChangeEvent<HTMLInputElement>,
-      //   });
-      // }}
+        onDragOver={(event: React.DragEvent<HTMLLabelElement>) => {
+          event.preventDefault();
+        }}
+        onDragLeave={(event: React.DragEvent<HTMLLabelElement>) => {
+          event.preventDefault();
+        }}
+        onDragEnter={(event: React.DragEvent<HTMLLabelElement>) => {
+          event.preventDefault();
+        }}
+        onDrop={(event: React.DragEvent<HTMLLabelElement>) => {
+          event.preventDefault();
+          handleDrop(event);
+          // handleFileUpload({
+          //   target: {
+          //     files: event.dataTransfer.files as FileList,
+          //   } as React.ChangeEvent<HTMLInputElement>,
+          // });
+        }}
       >
         <DropZoneInput
           type="file"

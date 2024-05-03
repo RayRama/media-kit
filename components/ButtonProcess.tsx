@@ -22,7 +22,7 @@ const Button = styled.button`
 `;
 
 interface ButtonProcessProps {
-  onClick: () => React.MouseEventHandler<HTMLButtonElement>;
+  onClick: () => Promise<void>;
   isProcessing: boolean;
 }
 

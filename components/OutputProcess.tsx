@@ -32,20 +32,13 @@ const OutputProcess: React.FC<OutputProcessProps> = ({
     <OutputProcessContainer>
       {outputFile && (
         <>
-          <p>Original File Size: {FormatFileSize(selectedFileSize)}</p>
-          <p>
-            Output File Size: {FormatFileSize(outputFile.size)} (Decreased by{" "}
-            {Math.round(
-              ((selectedFileSize - outputFile.size) / selectedFileSize) * 100
-            )}
-            %)
-          </p>
           {(outputFile.type.includes("image") && (
             <ImageResult
               src={URL.createObjectURL(outputFile.file)}
               width={500}
               height={500}
               alt="output image"
+              fetchPriority="auto"
             />
           )) ||
             (outputFile.type.includes("audio") && (
@@ -57,6 +50,15 @@ const OutputProcess: React.FC<OutputProcessProps> = ({
                 Your browser does not support the audio element.
               </audio>
             ))}
+
+          <p>Original File Size: {FormatFileSize(selectedFileSize)}</p>
+          <p>
+            Output File Size: {FormatFileSize(outputFile.size)} (Decreased by{" "}
+            {Math.round(
+              ((selectedFileSize - outputFile.size) / selectedFileSize) * 100
+            )}
+            %)
+          </p>
         </>
       )}
     </OutputProcessContainer>

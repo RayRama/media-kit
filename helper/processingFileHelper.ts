@@ -3,7 +3,7 @@ import { audioProcessing } from "./actions/audioProcessing";
 import { OutputFileType } from "@/type/outputfileType";
 
 interface ProcessingFileProps {
-  file: File | null;
+  file: File;
   maxWidth?: number;
   maxHeight?: number;
   isCompression?: boolean;
@@ -15,11 +15,16 @@ export async function ProcessingFileHelper({
   maxHeight,
   isCompression,
 }: ProcessingFileProps) {
-  let processedFile = null;
-  let details: OutputFileType = null;
+  let processedFile: any = null;
+  let details: OutputFileType = {
+    file: file,
+    name: "",
+    size: 0,
+    type: "",
+  };
 
   if (!file) {
-    return;
+    return alert("No file selected");
   }
 
   if (file.type.includes("image")) {

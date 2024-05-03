@@ -1,8 +1,8 @@
 import { NextPage } from "next";
 import Head from "next/head";
-import LandingPageTemplate from "../templates/LandingPage/LandingPageTemplate";
+// import LandingPageTemplate from "../templates/LandingPage/LandingPageTemplate";
 import DropZoneComponent from "@/components/DropZone";
-import { Main } from "next/document";
+// import { Main } from "next/document";
 import { useState } from "react";
 import styled from "@emotion/styled";
 import ButtonProcess from "@/components/ButtonProcess";
@@ -11,6 +11,7 @@ import { ProcessingFileHelper } from "@/helper/processingFileHelper";
 import OutputProcess from "@/components/OutputProcess";
 import ButtonDownload from "@/components/ButtonDownload";
 import { OutputFileType } from "@/type/outputfileType";
+import ImageProcessingSetting from "@/components/ImageProcessingSetting";
 
 const MainContainer = styled.div`
   display: flex;
@@ -33,16 +34,24 @@ const MainContent = styled.div`
 
 const Index: NextPage = () => {
   const [isProcessing, setIsProcessing] = useState<boolean>(false);
-  const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const [selectedFile, setSelectedFile] = useState<File>(
+    null as unknown as File
+  );
   const [fileName, setFileName] = useState<string>("");
-  const [outputFile, setOutputFile] = useState<OutputFileType | null>(null);
+  const [outputFile, setOutputFile] = useState<OutputFileType>(
+    null as unknown as OutputFileType
+  );
+
   const [maxHeight, setMaxHeight] = useState<number>(0);
   const [maxWidth, setMaxWidth] = useState<number>(0);
-  const [isCompression, setIsCompression] = useState<boolean>(false);
+  const [maxHeightPlaceholder, setMaxHeightPlaceholder] = useState<number>(0);
+  const [maxWidthPlaceholder, setMaxWidthPlaceholder] = useState<number>(0);
+
+  const [isCompression, setIsCompression] = useState<boolean>(true);
 
   const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
-    const { errorMessage, isValid } = CheckFileHelper(file);
+    const { errorMessage, isValid } = CheckFileHelper(file as File);
 
     if (!isValid) {
       alert(errorMessage);
@@ -51,16 +60,29 @@ const Index: NextPage = () => {
     }
 
     if (outputFile) {
-      setOutputFile(null);
+      setOutputFile(null as unknown as OutputFileType);
     }
-    setFileName(file.name);
-    setSelectedFile(file);
+    setFileName(file?.name || "");
+    setSelectedFile(file as File);
+
+    if (file?.type.includes("image")) {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        const image = new Image();
+        image.onload = () => {
+          const width = image.width;
+          const height = image.height;
+          setMaxHeightPlaceholder(height);
+          setMaxWidthPlaceholder(width);
+        };
+        image.src = e.target?.result as string;
+      };
+      reader.readAsDataURL(file);
+    }
   };
 
   const handleButtonProcess = async () => {
     setIsProcessing(true);
-
-    // console.log("selectedFile", selectedFile);
 
     if (selectedFile?.type.includes("image")) {
       await ProcessingFileHelper({
@@ -70,7 +92,7 @@ const Index: NextPage = () => {
         isCompression: isCompression,
       })
         .then((details) => {
-          setOutputFile(details);
+          setOutputFile(details as OutputFileType);
           setIsProcessing(false);
         })
         .catch((error) => {
@@ -82,7 +104,7 @@ const Index: NextPage = () => {
         file: selectedFile,
       })
         .then((details) => {
-          setOutputFile(details);
+          setOutputFile(details as OutputFileType);
           setIsProcessing(false);
         })
         .catch((error) => {
@@ -108,32 +130,19 @@ const Index: NextPage = () => {
             handleFileUpload={handleFileUpload}
           />
 
-          <label>
-            Max Width:
-            <input
-              type="number"
-              initialValue={maxWidth}
-              onChange={(e) => setMaxWidth(Number(e.target.value))}
+          {selectedFile && selectedFile.type.includes("image") && (
+            <ImageProcessingSetting
+              maxHeightPlaceholder={maxHeightPlaceholder}
+              maxWidthPlaceholder={maxWidthPlaceholder}
+              isCompression={isCompression}
+              setMaxWidth={setMaxWidth}
+              setMaxHeight={setMaxHeight}
+              setIsCompression={setIsCompression}
             />
-            Max Height:
-            <input
-              type="number"
-              initialValue={maxHeight}
-              onChange={(e) => setMaxHeight(Number(e.target.value))}
-            />
-          </label>
-
-          <label>
-            <input
-              type="checkbox"
-              checked={isCompression}
-              onChange={(e) => setIsCompression(e.target.checked)}
-            />
-            Compression
-          </label>
+          )}
 
           <ButtonProcess
-            onClick={() => handleButtonProcess()}
+            onClick={handleButtonProcess}
             isProcessing={isProcessing}
           />
 

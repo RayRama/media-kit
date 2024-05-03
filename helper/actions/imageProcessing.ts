@@ -1,7 +1,7 @@
 import imageCompression from "browser-image-compression"; // image processing library
 
 interface ImageProcessingProps {
-  file: File | null;
+  file: File;
   maxWidth?: number;
   maxHeight?: number;
   isCompression?: boolean;
@@ -37,7 +37,7 @@ export async function imageProcessing({
   return null;
 }
 
-function imageResize(file: File | null, maxHeight: number, maxWidth: number) {
+function imageResize(file: File, maxHeight: number = 0, maxWidth: number = 0) {
   const image = new Image();
   image.src = URL.createObjectURL(file);
 
@@ -51,8 +51,8 @@ function imageResize(file: File | null, maxHeight: number, maxWidth: number) {
         return;
       }
 
-      canvas.width = maxWidth;
-      canvas.height = maxHeight;
+      canvas.width = maxWidth || image.width;
+      canvas.height = maxHeight || image.height;
 
       ctx.drawImage(image, 0, 0, maxWidth, maxHeight);
 
