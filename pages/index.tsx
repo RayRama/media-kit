@@ -82,6 +82,11 @@ const Index: NextPage = () => {
   };
 
   const handleButtonProcess = async () => {
+    if (!selectedFile) {
+      alert("Please select a file first");
+      return;
+    }
+
     setIsProcessing(true);
 
     if (selectedFile?.type.includes("image")) {

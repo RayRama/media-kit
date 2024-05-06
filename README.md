@@ -2,7 +2,7 @@
 
 <div style="display: flex; flex-direction: row; gap: .5rem">
 
-[![Demo on Youtube](https://img.shields.io/badge/Demo%20on-Youtube-red)](https://www.youtube.com/watch?v=Q1jZ6n5Y1ZQ)
+[![Demo on Youtube](https://img.shields.io/badge/Demo%20on-Youtube-red)](https://youtu.be/zBpukvbHsnM?si=BMsJSGrLdajocQYv)
 
 [![Demo on Web](https://img.shields.io/badge/Demo%20on-Web-blue)](https://tiny-media.vercel.app/)
 
