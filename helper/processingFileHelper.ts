@@ -1,6 +1,7 @@
 import { imageProcessing } from "./actions/imageProcessing";
 import { audioProcessing } from "./actions/audioProcessing";
 import { OutputFileType } from "@/type/outputfileType";
+import { videoProcessing } from "./actions/videoProcessing";
 
 interface ProcessingFileProps {
   file: File;
@@ -36,6 +37,8 @@ export async function ProcessingFileHelper({
     });
   } else if (file.type.includes("audio")) {
     processedFile = await audioProcessing(file);
+  } else if (file.type.includes("video")) {
+    processedFile = await videoProcessing(file);
   }
 
   if (processedFile) {

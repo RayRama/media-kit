@@ -32,7 +32,7 @@ const OutputProcess: React.FC<OutputProcessProps> = ({
     <OutputProcessContainer>
       {outputFile && (
         <>
-          {(outputFile.type.includes("image") && (
+          {(outputFile?.type?.includes("image") && (
             <ImageResult
               src={URL.createObjectURL(outputFile.file)}
               width={500}
@@ -41,7 +41,7 @@ const OutputProcess: React.FC<OutputProcessProps> = ({
               fetchPriority="auto"
             />
           )) ||
-            (outputFile.type.includes("audio") && (
+            (outputFile?.type?.includes("audio") && (
               <audio controls>
                 <source
                   src={URL.createObjectURL(outputFile.file)}
@@ -49,6 +49,15 @@ const OutputProcess: React.FC<OutputProcessProps> = ({
                 />
                 Your browser does not support the audio element.
               </audio>
+            )) ||
+            (outputFile?.type?.includes("video") && (
+              <video controls>
+                <source
+                  src={URL.createObjectURL(outputFile.file)}
+                  type="video/mp4"
+                />
+                Your browser does not support the video element.
+              </video>
             ))}
 
           <p>Original File Size: {FormatFileSize(selectedFileSize)}</p>

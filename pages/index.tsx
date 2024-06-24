@@ -98,6 +98,7 @@ const Index: NextPage = () => {
       })
         .then((details) => {
           setOutputFile(details as OutputFileType);
+          console.log("output", outputFile);
           setIsProcessing(false);
         })
         .catch((error) => {
@@ -110,6 +111,20 @@ const Index: NextPage = () => {
       })
         .then((details) => {
           setOutputFile(details as OutputFileType);
+          console.log("output", outputFile);
+          setIsProcessing(false);
+        })
+        .catch((error) => {
+          console.error("ProcessingFileHelper error", error);
+          setIsProcessing(false);
+        });
+    } else if (selectedFile?.type.includes("video")) {
+      await ProcessingFileHelper({
+        file: selectedFile,
+      })
+        .then((details) => {
+          setOutputFile(details as OutputFileType);
+          console.log("output", outputFile);
           setIsProcessing(false);
         })
         .catch((error) => {
@@ -151,7 +166,7 @@ const Index: NextPage = () => {
             isProcessing={isProcessing}
           />
 
-          {isProcessing && <p>Processing...</p>}
+          {isProcessing && <p className="loading-text">Processing...</p>}
           {outputFile && (
             <>
               <OutputProcess

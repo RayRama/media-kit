@@ -17,7 +17,12 @@ export function CheckFileHelper(file: File) {
 
   // check file type (only images and audio files are allowed)
   const fileType = file.type;
-  if (fileType && !fileType.includes("image") && !fileType.includes("audio")) {
+  if (
+    fileType &&
+    !fileType.includes("image") &&
+    !fileType.includes("audio") &&
+    !fileType.includes("video")
+  ) {
     return {
       errorMessage: "Only images and audio files are allowed",
       isValid: false,

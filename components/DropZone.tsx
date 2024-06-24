@@ -103,7 +103,7 @@ const DropZoneComponent: React.FC<DropZoneComponentProps> = ({
         <DropZoneInput
           type="file"
           onChange={handleFileUpload}
-          accept=".jpg, .jpeg, .png, .mp3"
+          accept=".jpg, .jpeg, .png, .mp3, .avi, .mp4, .wav, .webm"
         />
         {selectedFile ? (
           <p style={{ textAlign: "center", overflow: "hidden" }}>{fileName}</p>
