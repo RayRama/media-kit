@@ -47,9 +47,9 @@ export async function videoProcessing(file: File) {
     ]);
 
     // Read the output video file
-    const data = await ffmpeg.readFile("output.mp4");
+    const data = (await ffmpeg.readFile("output.mp4")) as any;
 
-    return new Blob([data.buffer], { type: "video/mp4" });
+    return new Blob([data?.buffer], { type: "video/mp4" });
   } catch (error) {
     console.error("videoProcessing error", error);
     return null;
